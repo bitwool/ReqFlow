@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReqFlow.UI", "ReqFlow.UI\ReqFlow.UI.csproj", "{4A55A7C9-4B14-41A8-8DA6-C9B1440E123D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A55A7C9-4B14-41A8-8DA6-C9B1440E123D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A55A7C9-4B14-41A8-8DA6-C9B1440E123D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A55A7C9-4B14-41A8-8DA6-C9B1440E123D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A55A7C9-4B14-41A8-8DA6-C9B1440E123D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
