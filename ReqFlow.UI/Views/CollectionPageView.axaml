@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="450"
+             xmlns:vm="clr-namespace:ReqFlow.UI.ViewModels"
+             x:DataType="vm:CollectionPageViewModel"
+             x:Class="ReqFlow.UI.Views.CollectionPageView">
+
+    <Design.DataContext>
+        <vm:CollectionPageViewModel />
+    </Design.DataContext>
+    <Grid RowDefinitions="30,40,Auto" Background="{DynamicResource PrimaryBackground}">
+        <!-- <TextBoxox>集合</TextBox> -->
+        <Label Content="集合" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0,0,0,1">
+            <Grid ColumnDefinitions="150,40" Height="20">
+                <TextBox Width="150" Margin="10, 0,0,0">
+                    <TextBox.InnerLeftContent>
+                        <PathIcon Data="{StaticResource SearchRegular}" />
+                    </TextBox.InnerLeftContent>
+                    <!-- <TextBox.InnerRightContent> -->
+                    <!--     <TextBox Foreground="Black" BorderBrush="Transparent"></TextBox> -->
+                    <!-- </TextBox.InnerRightContent> -->
+                </TextBox>
+                <Button Grid.Column="1" Classes="IconButton"
+                        CommandParameter="History" HorizontalAlignment="Center" Width="30">
+                    <PathIcon HorizontalAlignment="Stretch" Data="{StaticResource AddSquareRegular}" />
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

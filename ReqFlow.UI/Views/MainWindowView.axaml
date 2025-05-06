@@ -1,0 +1,66 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:ReqFlow.UI.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="1400" d:DesignHeight="800"
+        MinWidth="800" MinHeight="600"
+        x:Class="ReqFlow.UI.Views.MainWindowView"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="ReqFlow">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <Grid Background="{DynamicResource PrimaryBackground}" ColumnDefinitions="40, 200, *">
+        <Border>
+            <Grid RowDefinitions="Auto, *" Background="{DynamicResource SidebarBackground}">
+                <StackPanel HorizontalAlignment="Stretch" Spacing="5" Background="{DynamicResource SidebarBackground}">
+                    <!-- <Image Source="/Assets/avalonia-logo.ico"></Image> -->
+                    <Button Classes="IconButton" Command="{Binding NavigateToCommand}"
+                            CommandParameter="Collection">
+                        <PathIcon Data="{StaticResource FolderRegular}" />
+                    </Button>
+                    <Button Classes="IconButton" Command="{Binding NavigateToCommand}"
+                            CommandParameter="Vars">
+                        <PathIcon Data="{StaticResource NotepadRegular}" />
+                    </Button>
+                    <Button Classes="IconButton" Command="{Binding NavigateToCommand}"
+                            CommandParameter="History">
+                        <PathIcon Data="{StaticResource HistoryRegular}" />
+                    </Button>
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
+                    <Button Classes="IconButton"
+                            Command="{Binding NavigateToCommand}"
+                            CommandParameter="Settings"
+                            Margin="0,0,0,10">
+                        <PathIcon Data="{StaticResource SettingsRegular}"></PathIcon>
+                    </Button>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
+        <Border Grid.Column="1" IsVisible="{Binding !IsSettingsPage}" BorderBrush="{DynamicResource SidebarBackground}" BorderThickness="0,0,1,0">
+            <ContentControl Content="{Binding OperationPage}"></ContentControl>
+        </Border>
+        <Border Grid.Column="2" IsVisible="{Binding !IsSettingsPage}" >
+            <ContentControl Content="{Binding WorkAreaViewModel }"></ContentControl>
+        </Border>
+
+        <Border Grid.Column="1" Grid.ColumnSpan="2" IsVisible="{Binding IsSettingsPage}">
+            <ContentControl Content="{Binding  SettingsPageViewModel}"></ContentControl>
+
+        </Border>
+
+
+    </Grid>
+
+
+</Window>

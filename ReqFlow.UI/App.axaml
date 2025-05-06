@@ -3,13 +3,20 @@
              x:Class="ReqFlow.UI.App"
              xmlns:local="using:ReqFlow.UI"
              RequestedThemeVariant="Default">
-             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
-  
+
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="Styles/DefaultStyles.axaml"></StyleInclude>
+        <StyleInclude Source="Styles/Icons.axaml"></StyleInclude>
     </Application.Styles>
+
+    <Application.Resources>
+        <SolidColorBrush x:Key="PrimaryBackground">#f3f3f3</SolidColorBrush>
+        <SolidColorBrush x:Key="SidebarBackground">#d0d6da</SolidColorBrush>
+    </Application.Resources>
 </Application>
