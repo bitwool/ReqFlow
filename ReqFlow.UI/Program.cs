@@ -1,7 +1,8 @@
 ﻿using Avalonia;
 using System;
+using ReqFlow.UI;
 
-namespace ReqFlow.UI;
+namespace ReqFlow.Desktop;
 
 sealed class Program
 {

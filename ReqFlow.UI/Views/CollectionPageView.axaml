@@ -2,10 +2,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="200" d:DesignHeight="450"
-             xmlns:vm="clr-namespace:ReqFlow.UI.ViewModels"
+             xmlns:c="clr-namespace:ReqFlow.UI.Converters"
+             xmlns:dt="clr-namespace:ReqFlow.UI.DataTemplates"
+             xmlns:m="clr-namespace:ReqFlow.Core.Models"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
+             xmlns:vm="using:ReqFlow.UI.ViewModels"
+             xmlns:models="clr-namespace:ReqFlow.Core.Models;assembly=ReqFlow.Core"
              x:DataType="vm:CollectionPageViewModel"
              x:Class="ReqFlow.UI.Views.CollectionPageView">
+    <UserControl.Resources>
+        <DataTemplate x:Key="FolderDataTemplate" DataType="vm:CollectionNode">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" Foreground="Red" FontWeight="Bold" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="ApiDefinitionDataTemplate" DataType="vm:CollectionNode">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" Foreground="Yellow" FontWeight="Bold" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TestCaseDataTemplate" DataType="vm:CollectionNode">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" Foreground="Blue" FontWeight="Bold" />
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- 节点类型数据模板选择器 -->
+        <dt:NodeTypeTemplateSelector x:Key="NodeTemplateSelector"
+                                     FolderDataTemplate="{StaticResource FolderDataTemplate}"
+                                     ApiDefinitionDataTemplate="{StaticResource ApiDefinitionDataTemplate}"
+                                     TestCaseDataTemplate="{StaticResource TestCaseDataTemplate}" />
+
+
+    </UserControl.Resources>
 
     <Design.DataContext>
         <vm:CollectionPageViewModel />
@@ -29,5 +60,14 @@
                 </Button>
             </Grid>
         </Border>
+        <TreeView Grid.Row="2" Margin="10" ItemsSource="{Binding Nodes}">
+            <TreeView.ItemTemplate>
+                <TreeDataTemplate ItemsSource="{Binding SubNodes}">
+                    <ContentControl Content="{Binding}"
+                                    ContentTemplate="{StaticResource NodeTemplateSelector}" />
+                </TreeDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+
     </Grid>
 </UserControl>
