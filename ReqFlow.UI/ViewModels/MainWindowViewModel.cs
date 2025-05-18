@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ReqFlow.UI.Views;
@@ -32,6 +33,8 @@ public partial class MainWindowViewModel : ViewModelBase
 
         OperationPage = _collectionPageViewModel;
         IsSettingsPage = false;
+
+        _collectionPageViewModel.PropertyChanged += CollectionPageVM_PropertyChanged;
     }
 
     // 页面导航命令
@@ -49,6 +52,28 @@ public partial class MainWindowViewModel : ViewModelBase
                 "History" => _historyPageViewModel,
                 _ => _collectionPageViewModel
             };
+        }
+    }
+
+
+    private void CollectionPageVM_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(_collectionPageViewModel.SelectedNode))
+        {
+            HandleNodeSelection();
+        }
+    }
+
+    private void HandleNodeSelection()
+    {
+        var selectedNode = _collectionPageViewModel.SelectedNode;
+        if (selectedNode is TestCaseViewModel || selectedNode is ApiViewModel)
+        {
+            _workAreaViewModel.OpenOrSelectTab(selectedNode);
+        }
+        else
+        {
+            _workAreaViewModel.ClearOrHandleNonContentSelection();
         }
     }
 }

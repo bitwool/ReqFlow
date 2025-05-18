@@ -21,17 +21,13 @@
                 <StackPanel HorizontalAlignment="Stretch" Spacing="5" Background="{DynamicResource SidebarBackground}">
                     <!-- <Image Source="/Assets/avalonia-logo.ico"></Image> -->
                     <Button Classes="IconButton" Command="{Binding NavigateToCommand}"
-                            CommandParameter="Collection">
-                        <PathIcon Data="{StaticResource FolderRegular}" />
-                    </Button>
+                            CommandParameter="Collection" Content="{LucideIconContent FolderTree}" />
                     <Button Classes="IconButton" Command="{Binding NavigateToCommand}"
-                            CommandParameter="Vars">
-                        <PathIcon Data="{StaticResource NotepadRegular}" />
-                    </Button>
+                            CommandParameter="Vars" Content="{LucideIconContent Database}"/>
                     <Button Classes="IconButton" Command="{Binding NavigateToCommand}"
-                            CommandParameter="History">
-                        <PathIcon Data="{StaticResource HistoryRegular}" />
-                    </Button>
+                            CommandParameter="History" Content="{LucideIconContent History}" />
+                        <!-- <PathIcon Data="{StaticResource HistoryRegular}" /> -->
+                    <!-- </Button> -->
                 </StackPanel>
 
                 <StackPanel Grid.Row="1" VerticalAlignment="Bottom">
@@ -46,10 +42,11 @@
             </Grid>
         </Border>
 
-        <Border Grid.Column="1" IsVisible="{Binding !IsSettingsPage}" BorderBrush="{DynamicResource SidebarBackground}" BorderThickness="0,0,1,0">
+        <Border Grid.Column="1" IsVisible="{Binding !IsSettingsPage}" BorderBrush="{DynamicResource SidebarBackground}"
+                BorderThickness="0,0,1,0">
             <ContentControl Content="{Binding OperationPage}"></ContentControl>
         </Border>
-        <Border Grid.Column="2" IsVisible="{Binding !IsSettingsPage}" >
+        <Border Grid.Column="2" IsVisible="{Binding !IsSettingsPage}">
             <ContentControl Content="{Binding WorkAreaViewModel }"></ContentControl>
         </Border>
 

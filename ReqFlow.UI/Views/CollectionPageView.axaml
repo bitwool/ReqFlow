@@ -2,71 +2,91 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:c="clr-namespace:ReqFlow.UI.Converters"
              xmlns:dt="clr-namespace:ReqFlow.UI.DataTemplates"
-             xmlns:m="clr-namespace:ReqFlow.Core.Models"
              mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="450"
              xmlns:vm="using:ReqFlow.UI.ViewModels"
-             xmlns:models="clr-namespace:ReqFlow.Core.Models;assembly=ReqFlow.Core"
              x:DataType="vm:CollectionPageViewModel"
              x:Class="ReqFlow.UI.Views.CollectionPageView">
-    <UserControl.Resources>
-        <DataTemplate x:Key="FolderDataTemplate" DataType="vm:CollectionNode">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Name}" Foreground="Red" FontWeight="Bold" />
-            </StackPanel>
-        </DataTemplate>
-
-        <DataTemplate x:Key="ApiDefinitionDataTemplate" DataType="vm:CollectionNode">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Name}" Foreground="Yellow" FontWeight="Bold" />
-            </StackPanel>
-        </DataTemplate>
-
-        <DataTemplate x:Key="TestCaseDataTemplate" DataType="vm:CollectionNode">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding Name}" Foreground="Blue" FontWeight="Bold" />
-            </StackPanel>
-        </DataTemplate>
-
-        <!-- 节点类型数据模板选择器 -->
-        <dt:NodeTypeTemplateSelector x:Key="NodeTemplateSelector"
-                                     FolderDataTemplate="{StaticResource FolderDataTemplate}"
-                                     ApiDefinitionDataTemplate="{StaticResource ApiDefinitionDataTemplate}"
-                                     TestCaseDataTemplate="{StaticResource TestCaseDataTemplate}" />
-
-
-    </UserControl.Resources>
+    <!-- <UserControl.Resources> -->
+    <!--     <TreeDataTemplate x:Key="FolderDataTemplate" DataType="vm:FolderNodeViewModel" -->
+    <!--                   ItemsSource="{Binding SubNodes}"> -->
+    <!--         <StackPanel Orientation="Horizontal"> -->
+    <!--             <LucideIcon Kind="Folder"></LucideIcon> -->
+    <!--             <TextBlock Text="{Binding Name}" Foreground="Red" FontWeight="Bold" /> -->
+    <!--         </StackPanel> -->
+    <!--     </TreeDataTemplate> -->
+    <!-- -->
+    <!--     <TreeDataTemplate x:Key="ApiDefinitionDataTemplate" DataType="vm:ApiViewModel" -->
+    <!--                       ItemsSource="{Binding SubNodes}"> -->
+    <!--         <StackPanel Orientation="Horizontal"> -->
+    <!--             <TextBlock Text="{Binding HttpMethod}" Foreground="Green" FontWeight="Bold" /> -->
+    <!--             <TextBlock Text="{Binding Name}" Foreground="Green" FontWeight="Bold" /> -->
+    <!--         </StackPanel> -->
+    <!--     </TreeDataTemplate> -->
+    <!-- -->
+    <!--     <TreeDataTemplate x:Key="TestCaseDataTemplate" DataType="vm:TestCaseViewModel"> -->
+    <!--         <StackPanel Orientation="Horizontal"> -->
+    <!--             <LucideIcon Kind="Zap"></LucideIcon> -->
+    <!--             <TextBlock Text="{Binding Name}" Foreground="Blue" FontWeight="Bold" /> -->
+    <!--         </StackPanel> -->
+    <!--     </TreeDataTemplate> -->
+    <!-- -->
+    <!--     ~1~ 节点类型数据模板选择器 @1@ -->
+    <!--     <dt:NodeTypeTemplateSelector x:Key="NodeTemplateSelector" -->
+    <!--                                  FolderDataTemplate="{StaticResource FolderDataTemplate}" -->
+    <!--                                  ApiDataTemplate="{StaticResource ApiDefinitionDataTemplate}" -->
+    <!--                                  TestCaseDataTemplate="{StaticResource TestCaseDataTemplate}" /> -->
+    <!-- -->
+    <!-- -->
+    <!-- </UserControl.Resources> -->
 
     <Design.DataContext>
         <vm:CollectionPageViewModel />
     </Design.DataContext>
+
     <Grid RowDefinitions="30,40,Auto" Background="{DynamicResource PrimaryBackground}">
         <!-- <TextBoxox>集合</TextBox> -->
         <Label Content="集合" VerticalAlignment="Center" Margin="10,0,0,0"></Label>
         <Border Grid.Row="1" BorderBrush="Black" BorderThickness="0,0,0,1">
-            <Grid ColumnDefinitions="150,40" Height="20">
+            <Grid ColumnDefinitions="160,40" Height="30">
                 <TextBox Width="150" Margin="10, 0,0,0">
                     <TextBox.InnerLeftContent>
-                        <PathIcon Data="{StaticResource SearchRegular}" />
+                        <LucideIcon Kind="Search"></LucideIcon>
                     </TextBox.InnerLeftContent>
-                    <!-- <TextBox.InnerRightContent> -->
-                    <!--     <TextBox Foreground="Black" BorderBrush="Transparent"></TextBox> -->
-                    <!-- </TextBox.InnerRightContent> -->
                 </TextBox>
-                <Button Grid.Column="1" Classes="IconButton"
-                        CommandParameter="History" HorizontalAlignment="Center" Width="30">
-                    <PathIcon HorizontalAlignment="Stretch" Data="{StaticResource AddSquareRegular}" />
+                <Button Grid.Column="1" Background="Transparent" CommandParameter="History">
+                    <LucideIcon Kind="SquarePlus" Height="28" Size="30" HorizontalAlignment="Center"
+                                VerticalAlignment="Stretch" StrokeWidth="0.7" />
                 </Button>
             </Grid>
         </Border>
-        <TreeView Grid.Row="2" Margin="10" ItemsSource="{Binding Nodes}">
-            <TreeView.ItemTemplate>
-                <TreeDataTemplate ItemsSource="{Binding SubNodes}">
-                    <ContentControl Content="{Binding}"
-                                    ContentTemplate="{StaticResource NodeTemplateSelector}" />
+        <TreeView Grid.Row="2" Margin="10"
+                  ItemsSource="{Binding Nodes}"
+                  SelectedItem="{Binding SelectedNode, Mode=TwoWay}">
+            <TreeView.DataTemplates>
+                <TreeDataTemplate DataType="vm:FolderNodeViewModel"
+                                  ItemsSource="{Binding SubNodes}">
+                    <StackPanel Orientation="Horizontal">
+                        <LucideIcon Kind="Folder"></LucideIcon>
+                        <TextBlock Text="{Binding Name}" Foreground="Red" FontWeight="Bold" />
+                    </StackPanel>
                 </TreeDataTemplate>
-            </TreeView.ItemTemplate>
+
+                <TreeDataTemplate DataType="vm:ApiViewModel"
+                                  ItemsSource="{Binding SubNodes}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding HttpMethod}" Foreground="Green" FontWeight="Bold" />
+                        <TextBlock Text="{Binding Name}" Foreground="Green" FontWeight="Bold" />
+                    </StackPanel>
+                </TreeDataTemplate>
+
+                <TreeDataTemplate DataType="vm:TestCaseViewModel">
+                    <StackPanel Orientation="Horizontal">
+                        <LucideIcon Kind="Zap"></LucideIcon>
+                        <TextBlock Text="{Binding Name}" Foreground="Blue" FontWeight="Bold" />
+                    </StackPanel>
+                </TreeDataTemplate>
+            </TreeView.DataTemplates>
         </TreeView>
 
     </Grid>
