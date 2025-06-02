@@ -7,6 +7,7 @@ using System.Text.Json;
 using Avalonia.Collections;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ReqFlow.Core.Enums;
 
 namespace ReqFlow.UI.ViewModels;
 
@@ -36,7 +37,7 @@ public partial class CollectionPageViewModel : ViewModelBase
         {
             Id = "folder1",
             Name = "folder1",
-            TreeNodeType = TreeNodeType.Folder,
+            NodeType = NodeType.Folder,
             IsExpanded = true
         };
         Nodes.Add(folder1);
@@ -46,7 +47,7 @@ public partial class CollectionPageViewModel : ViewModelBase
         {
             Id = "folder1_1",
             Name = "folder1_1",
-            TreeNodeType = TreeNodeType.Folder,
+            NodeType = NodeType.Folder,
             IsExpanded = true
         };
         folder1.SubNodes.Add(folder1_1);
@@ -56,7 +57,7 @@ public partial class CollectionPageViewModel : ViewModelBase
         {
             Id = "api1_1_1",
             Name = "api1_1_1",
-            TreeNodeType = TreeNodeType.Api,
+            NodeType = NodeType.Api,
             HttpMethod = "GET",
             IsExpanded = true
         };
@@ -67,7 +68,7 @@ public partial class CollectionPageViewModel : ViewModelBase
         {
             Id = "tc1_1_1_1",
             Name = "tc1_1_1_1",
-            TreeNodeType = TreeNodeType.TestCase,
+            NodeType = NodeType.TestCase,
             IsSuccess = true
         };
         api1_1_1.SubNodes.Add(testCase1_1_1_1);
@@ -77,7 +78,7 @@ public partial class CollectionPageViewModel : ViewModelBase
         {
             Id = "tc1_1_1_2",
             Name = "tc1_1_1_2",
-            TreeNodeType = TreeNodeType.TestCase,
+            NodeType = NodeType.TestCase,
             IsSuccess = false
         };
         api1_1_1.SubNodes.Add(testCase1_1_1_2);
@@ -87,7 +88,7 @@ public partial class CollectionPageViewModel : ViewModelBase
         {
             Id = "api1_1_2",
             Name = "Create User",
-            TreeNodeType = TreeNodeType.Api,
+            NodeType = NodeType.Api,
             HttpMethod = "POST",
             IsExpanded = false // 默认不展开
         };
@@ -99,7 +100,7 @@ public partial class CollectionPageViewModel : ViewModelBase
         {
             Id = "folder2",
             Name = "folder2",
-            TreeNodeType = TreeNodeType.Folder,
+            NodeType = NodeType.Folder,
             IsExpanded = false // 默认不展开
         };
         Nodes.Add(folder2);
@@ -109,7 +110,7 @@ public partial class CollectionPageViewModel : ViewModelBase
         {
             Id = "folder2_1",
             Name = "Categories",
-            TreeNodeType = TreeNodeType.Folder,
+            NodeType = NodeType.Folder,
             IsExpanded = true
         };
         folder2.SubNodes.Add(folder2_1);
@@ -119,7 +120,7 @@ public partial class CollectionPageViewModel : ViewModelBase
         {
             Id = "api2_1_1",
             Name = "List All Categories",
-            TreeNodeType = TreeNodeType.Api,
+            NodeType = NodeType.Api,
             HttpMethod = "GET"
         };
         folder2_1.SubNodes.Add(api2_1_1);

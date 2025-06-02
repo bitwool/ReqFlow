@@ -3,15 +3,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:ReqFlow.UI.ViewModels"
+             xmlns:dt="using:ReqFlow.UI.DataTemplates"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="ReqFlow.UI.Views.WorkAreaView"
              x:DataType="vm:WorkAreaViewModel">
+
     <Grid>
         <!-- 当没有选择节点时显示的占位符 -->
         <TabControl ItemsSource="{Binding OpenTabs}"
                     SelectedItem="{Binding SelectedTab, Mode=TwoWay}">
-            <TabControl.ItemTemplate>
-                <DataTemplate DataType="vm:TabItemViewModel">
+            <TabControl.DataTemplates>
+                <DataTemplate DataType="vm:ApiTabViewModel">
                     <StackPanel Orientation="Horizontal" Spacing="5">
                         <TextBlock Text="{Binding Header}" VerticalAlignment="Center" />
                         <Button Command="{Binding CloseCommand}"
@@ -35,19 +37,64 @@
                         </Button>
                     </StackPanel>
                 </DataTemplate>
-            </TabControl.ItemTemplate>
+                <DataTemplate DataType="vm:TestCaseTabViewModel">
+                    <StackPanel Orientation="Horizontal" Spacing="5">
+                        <TextBlock Text="{Binding Header}" VerticalAlignment="Center" Foreground="Red" />
+                        <Button Command="{Binding CloseCommand}"
+                                Content="x"
+                                FontSize="10"
+                                FontWeight="Bold"
+                                Width="18" Height="18"
+                                Padding="0" Margin="2,0,0,0"
+                                BorderThickness="0"
+                                Background="Transparent"
+                                Foreground="Gray"
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                            <Button.Styles>
+                                <Style Selector="Button:pointerover /template/ ContentPresenter">
+                                    <Setter Property="Background" Value="LightGray" />
+                                    <Setter Property="TextBlock.Foreground" Value="Black" />
+                                </Style>
+                            </Button.Styles>
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.DataTemplates>
 
             <TabControl.ContentTemplate>
-                <DataTemplate DataType="vm:TabItemViewModel">
-                    <Border BorderBrush="LightGray" BorderThickness="1" Padding="10" Margin="5">
-                        <ScrollViewer>
-                            <TextBlock Text="{Binding Content}"
-                                       TextWrapping="Wrap"
-                                       VerticalAlignment="Top"
-                                       FontSize="14" />
-                        </ScrollViewer>
-                    </Border>
-                </DataTemplate>
+                <dt:TabContentTemplateSelector>
+                    <DataTemplate x:Key="ApiTabViewModel" DataType="vm:ApiTabViewModel">
+                        <Border BorderBrush="DodgerBlue" BorderThickness="1" Padding="10" Margin="5">
+                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                <StackPanel Spacing="10">
+                                    <TextBlock Text="{Binding Header, StringFormat='API: {0}'}" FontSize="18"
+                                               FontWeight="Bold" Foreground="DodgerBlue" />
+                                    <TextBlock Text="这里是 API 类型标签页的特定内容区域。" TextWrapping="Wrap" />
+                                    <TextBlock Text="{Binding Content, StringFormat='通用内容: {0}'}" TextWrapping="Wrap"
+                                               FontStyle="Italic" Foreground="Gray" />
+                                    <!-- 可以添加更多 API 特有的控件和绑定 -->
+                                </StackPanel>
+                            </ScrollViewer>
+                        </Border>
+                    </DataTemplate>
+
+                    <!-- Content Template for TestCaseTabViewModel -->
+                    <!-- x:Key 必须与 TestCaseTabViewModel.GetType().Name (即 "TestCaseTabViewModel") 匹配 -->
+                    <DataTemplate x:Key="TestCaseTabViewModel" DataType="vm:TestCaseTabViewModel">
+                        <Border BorderBrush="ForestGreen" BorderThickness="1" Padding="10" Margin="5">
+                            <StackPanel Spacing="10">
+                                <TextBlock Text="{Binding Header, StringFormat='Test Case: {0}'}" FontSize="18"
+                                           FontWeight="Bold" Foreground="ForestGreen" />
+                                <TextBlock Text="这里是测试用例类型标签页的特定内容区域。" TextWrapping="Wrap" />
+                                <TextBlock Text="{Binding Content, StringFormat='通用内容: {0}'}" TextWrapping="Wrap"
+                                           FontStyle="Italic" Foreground="Gray" />
+                                <TextBlock Text="响应内容:" FontWeight="SemiBold" />
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </dt:TabContentTemplateSelector>
             </TabControl.ContentTemplate>
         </TabControl>
     </Grid>

@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
+using ReqFlow.Core.Enums;
 
 namespace ReqFlow.UI.ViewModels;
 
@@ -25,11 +26,19 @@ public partial class WorkAreaViewModel : ViewModelBase
         }
         else
         {
-            // 如果不存在，则创建新的标签页
-            // 传入 CloseTab 方法作为回调
-            var newTab = new TabItemViewModel(treeNodeViewModel, CloseTab);
-            OpenTabs.Add(newTab);
-            SelectedTab = newTab; // 选中新创建的标签页
+
+            TabItemViewModel? newTab = treeNodeViewModel.NodeType switch
+            {
+                NodeType.Api => new ApiTabViewModel(treeNodeViewModel, CloseTab),
+                NodeType.TestCase => new TestCaseTabViewModel(treeNodeViewModel, CloseTab),
+                _ => null // 处理其他类型或未定义特定标签页类型的情况
+            };
+
+            if (newTab != null)
+            {
+                OpenTabs.Add(newTab);
+                SelectedTab = newTab; // 选中新创建的标签页
+            }
         }
     }
 
@@ -52,6 +61,5 @@ public partial class WorkAreaViewModel : ViewModelBase
     {
         Debug.WriteLine("Clearing or handling non-content selection");
     }
-
 
 }

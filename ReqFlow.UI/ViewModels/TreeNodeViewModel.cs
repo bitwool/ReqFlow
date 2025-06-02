@@ -2,15 +2,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
+using ReqFlow.Core.Enums;
 
 namespace ReqFlow.UI.ViewModels;
-
-public enum TreeNodeType
-{
-    Folder,
-    Api,
-    TestCase
-}
 
 public abstract partial class TreeNodeViewModel : ObservableObject
 {
@@ -18,7 +12,7 @@ public abstract partial class TreeNodeViewModel : ObservableObject
 
     [ObservableProperty] private string _name;
 
-    [ObservableProperty] private TreeNodeType _treeNodeType;
+    [ObservableProperty] private NodeType _nodeType;
 
     [ObservableProperty] private bool _isVisible;
 
